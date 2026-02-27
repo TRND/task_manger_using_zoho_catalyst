@@ -1,3 +1,4 @@
+
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import TaskList from './components/TaskList';
@@ -9,6 +10,7 @@ const App = () => {
 
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/app" />} />
       <Route 
         path="/app" 
         element={!isLoggedIn ? <LoginForm /> : <Navigate to="/app/dashboard" />} 
