@@ -56,20 +56,20 @@ const createTask = async (req, res) => {
         
         // Format current date as YYYY-MM-DD HH:mm:ss
         const now = new Date();
-        const formattedDate = now.getFullYear() + '-' +
-            String(now.getMonth() + 1).padStart(2, '0') + '-' +
-            String(now.getDate()).padStart(2, '0') + ' ' +
-            String(now.getHours()).padStart(2, '0') + ':' +
-            String(now.getMinutes()).padStart(2, '0') + ':' +
-            String(now.getSeconds()).padStart(2, '0');
+        // const formattedDate = now.getFullYear() + '-' +
+        //     String(now.getMonth() + 1).padStart(2, '0') + '-' +
+        //     String(now.getDate()).padStart(2, '0') + ' ' +
+        //     String(now.getHours()).padStart(2, '0') + ':' +
+        //     String(now.getMinutes()).padStart(2, '0') + ':' +
+        //     String(now.getSeconds()).padStart(2, '0');
         
         const taskTable = catalyst.datastore().table('Tasks');
         const task = await taskTable.insertRow({
-            Title: title,
-            Description: description || "",
-            Status: 'pending',
-            UserId: userId,
-            CreatedAt: formattedDate
+            title: title,
+            description: description || "",
+            status: 'pending',
+            userId: userId,
+            createdAt: formattedDate
         });
 
         res.status(201).json({
@@ -96,9 +96,9 @@ const updateTask = async (req, res) => {
         const taskTable = catalyst.datastore().table('Tasks');
         const task = await taskTable.updateRow({
             ROWID: id,
-            Title: title,
-            Description: description,
-            Status: status
+            title: title,
+            description: description,
+            status: status
         });
 
         if (!task) {
@@ -107,9 +107,9 @@ const updateTask = async (req, res) => {
 
         res.json({
             id: task.ROWID,
-            title: task.Title,
-            description: task.Description,
-            status: task.Status
+            title: task.title,
+            description: task.description,
+            status: task.status
         });
     } catch (error) {
         console.error('Update task error:', error);
