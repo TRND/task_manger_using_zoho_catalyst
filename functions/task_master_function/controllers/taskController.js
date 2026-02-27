@@ -14,8 +14,10 @@ const getTasks = async (req, res) => {
             `SELECT COUNT(ROWID) as total FROM Tasks WHERE userId = '${userId}'`
         );
         console.log("countQuery:", JSON.stringify(countQuery));
-        const totalItems = parseInt(countQuery[0].Tasks.total || countQuery[0].total || 0);
-        const hasMore = totalItems > page * perPage;
+const totalItems =
+  parseInt(countQuery?.[0]?.Tasks?.total) ||
+  parseInt(countQuery?.[0]?.total) ||
+  0;        const hasMore = totalItems > page * perPage;
 
         // Get paginated tasks
         const tasks = await zcql.executeZCQLQuery(
