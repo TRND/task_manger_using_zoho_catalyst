@@ -39,7 +39,10 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/ping', (req, res) => res.status(200).send('pong'));
+
 // Routes
+
 app.use('/auth', authRoutes);
 app.use('/tasks', taskRoutes);
 app.use(errorHandler);
