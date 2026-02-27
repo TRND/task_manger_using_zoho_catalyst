@@ -8,6 +8,8 @@ const getTasks = async (req, res) => {
         const zcql = catalyst.zcql();
         
         // Get total count
+
+        
         const countQuery = await zcql.executeZCQLQuery(
             `SELECT COUNT(ROWID) as total FROM Tasks WHERE userId = '${userId}'`
         );
@@ -16,20 +18,20 @@ const getTasks = async (req, res) => {
 
         // Get paginated tasks
         const tasks = await zcql.executeZCQLQuery(
-            `SELECT ROWID, Title, Description, Status, CreatedAt 
-             FROM Tasks 
-             WHERE userId = ${userId} 
-             ORDER BY CreatedAt DESC 
-             LIMIT ${(page - 1) * perPage}, ${perPage}`
-        );
+  `SELECT ROWID, title, description, status, CREATEDTIME
+   FROM Tasks
+   WHERE userId = '${userId}'
+   ORDER BY CREATEDTIME DESC
+   LIMIT ${(page - 1) * perPage}, ${perPage}`
+);
 
-        const formattedTasks = tasks.map(row => ({
-            id: row.Tasks.ROWID,
-            title: row.Tasks.Title,
-            description: row.Tasks.Description,
-            status: row.Tasks.Status,
-            createdAt: row.Tasks.CreatedAt
-        }));
+const formattedTasks = tasks.map(row => ({
+  id: row.Tasks.ROWID,
+  title: row.Tasks.title,
+  description: row.Tasks.description,
+  status: row.Tasks.status,
+  createdAt: row.Tasks.CREATEDTIME
+}));
 
         res.json({
             tasks: formattedTasks,
