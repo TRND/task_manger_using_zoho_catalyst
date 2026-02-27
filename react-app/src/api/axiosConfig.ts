@@ -2,7 +2,7 @@ import axios from 'axios';
 import store from '../redux/store/store';
 
 const api = axios.create({
-  baseURL: '/server/task_master_function',
+  baseURL: 'https://joeseotools-806918281.development.catalystserverless.com/server/task_master_function',
 });
 
 // api.interceptors.request.use((config) => {
