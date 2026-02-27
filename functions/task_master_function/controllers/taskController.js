@@ -1,7 +1,7 @@
 const getTasks = async (req, res) => {
     try {
         const { catalyst } = res.locals;
-        const userId = req.params.userId;
+        const userId = req.query.userId;
         const page = parseInt(req.query.page) || 1;
         const perPage = parseInt(req.query.perPage) || 10;
 
@@ -9,7 +9,7 @@ const getTasks = async (req, res) => {
         
         // Get total count
         const countQuery = await zcql.executeZCQLQuery(
-            `SELECT COUNT(ROWID) as total FROM Tasks WHERE UserId = ${userId}`
+            `SELECT COUNT(ROWID) as total FROM Tasks WHERE userId = '${userId}'`
         );
         const totalItems = parseInt(countQuery[0].Tasks.total);
         const hasMore = totalItems > page * perPage;
@@ -18,7 +18,7 @@ const getTasks = async (req, res) => {
         const tasks = await zcql.executeZCQLQuery(
             `SELECT ROWID, Title, Description, Status, CreatedAt 
              FROM Tasks 
-             WHERE UserId = ${userId} 
+             WHERE userId = ${userId} 
              ORDER BY CreatedAt DESC 
              LIMIT ${(page - 1) * perPage}, ${perPage}`
         );
